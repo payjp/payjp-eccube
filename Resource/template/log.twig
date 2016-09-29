@@ -1,0 +1,61 @@
+{% extends 'default_frame.twig' %}
+
+{% set menus = ['pay_jp', 'pay_jp_log'] %}
+
+{% block title %}PAY.JP{% endblock %}
+{% block sub_title %}ログ{% endblock %}
+
+{% block main %}
+    <link rel="stylesheet" href="/plugin/pay_jp/pay_jp.css" />
+    <script type="text/javascript" src="/plugin/pay_jp/pay_jp_admin.js"></script>
+    <div class="row" id="aside_wrap">
+        <div id="detail_wrap" class="col-md-12">
+            <div id="detail_box" class="box accordion">
+                <div id="detail_box__header" class="box-header toggle active">
+                    <h3 class="box-title">ログ<svg class="cb cb-angle-down icon_down"> <use xlink:href="#cb-angle-down" /></svg></h3>
+                </div><!-- /.box-header -->
+                <div id="detail_box__body" class="box-body accpanel" style="display: block;">
+                    <p id="pay_jp_log_page">{{ page + 1 }}/{{ last_page + 1}}ページ（計{{ count }}件）</p>
+                    <nav>
+                        <ul class="pagination">
+                            {% if page == 0 %}
+                                <li class="active"><a href="log-0">1 <span class="sr-only">(current)</span></a></li>
+                            {% else %}
+                                <li><a href="log-0">1</a></li>
+                            {% endif %}
+                            {% if page > 2 %}
+                                <li><a href="log-{{ page - 1 }}">{{ page }}</a></li>
+                            {% endif %}
+                            {% if page > 0 %}
+                                <li class="active"><a href="log-{{ page }}">{{ page + 1 }}<span class="sr-only">(current)</span></a></li>
+                            {% endif %}
+                            {% if page < last_page - 1 %}
+                                <li><a href="log-{{ page + 1 }}">{{ page + 2 }}</a></li>
+                            {% endif %}
+                            {% if page < last_page %}
+                                <li><a href="log-{{ last_page }}">{{ last_page + 1 }}</a></li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div><!-- /.box-body -->
+                <div style="padding:20px">
+                    <table class="table">
+                        <tr>
+                            <th style="width:180px;">時刻</th>
+                            <th>内容</th>
+                        </tr>
+                        {% for log in logs %}
+                            <tr>
+                                <td>{{ log.created_at|date('Y-m-d H:m:s') }}</td>
+                                <td>{{ log.message }}</td>
+                            </tr>
+                        {% else %}
+                            <tr><td colspan="2">ログはまだありません。</td></tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div><!-- /.box -->
+        </div><!-- /.col -->
+    </div>
+
+{% endblock %}

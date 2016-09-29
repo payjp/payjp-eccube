@@ -1,0 +1,60 @@
+.form-group .pay_jp_card_name {
+    width: 320px;
+    height: 30px;
+    font-size: 22px;
+    padding: 4px 2px;
+    text-align: center;
+}
+
+.form-group .pay_jp_card_exp {
+    width: 40px;
+    height: 30px;
+    font-size: 22px;
+    padding: 4px 2px;
+    text-align: center;
+}
+
+.form-group .pay_jp_card_number {
+    width: 72px;
+    height: 30px;
+    font-size: 22px;
+    padding: 4px 2px;
+    text-align: center;
+}
+
+.form-group .pay_jp_card_cvv {
+    width: 54px;
+    height: 30px;
+    font-size: 22px;
+    padding: 4px 2px;
+    text-align: center;
+}
+
+.form-group #pay_jp_form_table th {
+    min-width: 160px;
+    text-align: right;
+    padding: 6px 4px;
+    vertical-align: top;
+}
+
+.form-group #pay_jp_form_table td {
+    padding: 4px;
+    vertical-align: top;
+}
+
+
+.form-group .pay_jp_api_key {
+    width: 272px;
+    height: 26px;
+    font-size: 18px;
+    padding: 4px 2px;
+    text-align: center;
+}
+
+.pay_jp_error_message {
+    background-color: #ffdd8e;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}

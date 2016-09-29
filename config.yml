@@ -1,0 +1,10 @@
+name: 'PAY.JP決済プラグイン'
+version: 0.1.0
+code: PayJp
+event: PayJpEvent
+service:
+    - PayJpServiceProvider
+orm.path:
+    - /Resource/doctrine
+
+

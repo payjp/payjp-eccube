@@ -1,0 +1,54 @@
+{% extends 'default_frame.twig' %}
+
+{% set menus = ['pay_jp', 'pay_jp_api_key'] %}
+
+{% block title %}PAY.JP{% endblock %}
+{% block sub_title %}APIキー{% endblock %}
+
+{% block main %}
+    <link rel="stylesheet" href="/plugin/pay_jp/pay_jp.css" />
+    <script type="text/javascript" src="/plugin/pay_jp/pay_jp_admin.js"></script>
+    <div class="row" id="aside_wrap">
+        <form name="pay_jp_api_key_form" role="form" id="pay_jp_api_key" method="post" action="api_key_update">
+            {{ form_widget(form._token) }}
+            <div id="detail_wrap" class="col-md-9">
+                <div id="detail_box" class="box accordion">
+                    <div id="detail_box__header" class="box-header toggle active">
+                        <h3 class="box-title">APIキー<svg class="cb cb-angle-down icon_down"> <use xlink:href="#cb-angle-down" /></svg></h3>
+                    </div><!-- /.box-header -->
+                    <div id="detail_box__body" class="box-body accpanel" style="display: block;">
+                        <div class="form-horizontal">
+                            {# 秘密キー #}
+                            <div id="detail_box__api_key_secret" class="form-group" style="padding-left: 20px">
+                                {{ form_label(form.api_key_secret) }}
+                                {{ form_widget(form.api_key_secret) }}
+                                {{ form_errors(form.api_key_secret) }}
+                            </div>
+                        </div>
+                    </div><!-- /.box-body -->
+                    <div style="padding:20px">
+                        <p>
+                            <button id="api_key_check" type="button" class="btn btn-info">動作確認</button>
+                        </p>
+                        <div id="api_key_check_result"></div>
+                    </div>
+                </div><!-- /.box -->
+            </div><!-- /.col -->
+
+            <div id="common_box" class="col-md-3" id="aside_column">
+                <div class="col_inner">
+                    <div id="button_box" class="box no-header">
+                        <div id="button_box__body" class="box-body">
+                            <div id="button_box__insert_button" class="row text-center">
+                                <div class="col-sm-6 col-sm-offset-3 col-md-12 col-md-offset-0">
+                                    <button class="btn btn-primary btn-block btn-lg" type="submit">APIキーを登録</button>
+                                </div>
+                            </div>
+                        </div><!-- /.box-body -->
+                    </div><!-- /.box -->
+
+                </div>
+            </div><!-- /.col -->
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,27 @@
+# PayJpEvent
+card_info: クレジットカード情報
+card_holder: 名義
+card_number: カード番号
+security_code: セキュリティコード
+security_code_notice:  ※ カード裏面に記載されている3〜4桁の番号を入力してください
+expiration: 有効期限
+card_accept: クレジットカード情報は入力済みです。
+use_another_card: 別のカードを使用する
+
+# PayJpClient
+unexpected_error: 予期せぬエラー
+
+# AdminController
+failed_invalid_api_key: 失敗しました。入力した鍵では認証できませんでした。
+error_occur: エラーが発生しました。
+succeed: 成功しました。
+key_specification: 鍵の種類
+for_test: テスト用
+for_production: 本番用
+failed: 失敗しました。
+
+# pay_jp.js
+credit_card_holder_required: クレジットカードの名義を入力してください
+credit_card_number_required: クレジットカード番号を入力してください
+security_code_required: セキュリティコードを入力してください
+expiration_required: 有効期限を入力してください

@@ -1,0 +1,27 @@
+# PayJpEvent
+card_info: Credit Card
+card_holder: Owner
+card_number: Number
+security_code: Security Code
+security_code_notice:  * on the reverse side
+expiration: Expiration
+card_accept: Already accepted
+use_another_card: Use another card
+
+# PayJpClient
+unexpected_error: Unexpected error
+
+# AdminController
+failed_invalid_api_key: Invalid API key
+error_occur: An error occurred
+succeed: Success
+key_specification: Key Spec.
+for_test: for Test
+for_production: for Bussiness
+failed: Failure
+
+# pay_jp.js
+credit_card_holder_required: Card holder is requried
+credit_card_number_required: Card number is required
+security_code_required: security code is required
+expiration_required: expiration is required

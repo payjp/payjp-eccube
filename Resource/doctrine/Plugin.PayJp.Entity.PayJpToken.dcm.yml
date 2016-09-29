@@ -1,0 +1,20 @@
+Plugin\PayJp\Entity\PayJpToken:
+    type: entity
+    table: plg_pay_jp_token
+    repositoryClass: Plugin\PayJp\Repository\PayJpTokenRepository
+    id:
+        id:
+            type: string
+            nullable: false
+            id: true
+            column: id
+            generator:
+                strategy: NONE
+    fields:
+        pay_jp_token:
+            type: string
+            nullable: false
+        created_at:
+            type: datetime
+            nullable: true
+    lifecycleCallbacks: {  }

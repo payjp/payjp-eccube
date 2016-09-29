@@ -1,0 +1,16 @@
+front.shopping.index.initialize:
+    - [onFrontShoppingIndexInitialize, NORMAL]
+Shopping/index.twig:
+    - [onRenderShippingIndex, NORMAL]
+
+front.shopping.confirm.initialize:
+    - [onFrontShoppingConfirmInitialize, NORMAL]
+
+admin.order.edit.index.initialize:
+    - [onAdminOrderEditIndexInitialize, NORMAL]
+
+Admin/Order/edit.twig:
+    - [onRenderAdminOrderEdit, NORMAL]
+
+Admin/Order/index.twig:
+    - [onRenderAdminOrderIndex, NORMAL]

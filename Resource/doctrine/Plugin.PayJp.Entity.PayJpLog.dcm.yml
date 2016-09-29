@@ -1,0 +1,21 @@
+Plugin\PayJp\Entity\PayJpLog:
+    type: entity
+    table: plg_pay_jp_log
+    repositoryClass: Plugin\PayJp\Repository\PayJpLogRepository
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            column: id
+            generator:
+                strategy: AUTO
+    fields:
+        message:
+            type: string
+            nullable: false
+        created_at:
+            type: datetime
+            nullable: true
+    lifecycleCallbacks: {  }

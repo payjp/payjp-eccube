@@ -1,0 +1,21 @@
+Plugin\PayJp\Entity\PayJpCustomer:
+    type: entity
+    table: plg_pay_jp_customer
+    repositoryClass: Plugin\PayJp\Repository\PayJpCustomerRepository
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            column: id
+            generator:
+                strategy: NONE
+    fields:
+        pay_jp_customer_id:
+            type: string
+            nullable: false
+        created_at:
+            type: datetime
+            nullable: true
+    lifecycleCallbacks: {  }

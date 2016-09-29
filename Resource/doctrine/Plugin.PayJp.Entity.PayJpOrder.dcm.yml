@@ -1,0 +1,30 @@
+Plugin\PayJp\Entity\PayJpOrder:
+    type: entity
+    table: plg_pay_jp_order
+    repositoryClass: Plugin\PayJp\Repository\PayJpOrderRepository
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            column: id
+            generator:
+                strategy: AUTO
+    fields:
+        order_id:
+            type: integer
+            nullable: false
+        pay_jp_customer_id:
+            type: string
+            nullable: false
+        pay_jp_token:
+            type: string
+            nullable: false
+        pay_jp_charge_id:
+            type: string
+            nullable: false
+        created_at:
+            type: datetime
+            nullable: true
+    lifecycleCallbacks: {  }
