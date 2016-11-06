@@ -45,7 +45,7 @@ php composer.phar install
 
 ```
 cd EC-CUBE/app/Plugin
-git clone https://github.com/payjp/payjp-eccube.git
+git clone https://github.com/payjp/payjp-eccube.git PayJp
 ```
 
 - プラグインをコマンドラインからインストールします。
