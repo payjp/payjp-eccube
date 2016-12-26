@@ -231,7 +231,7 @@ class PayJpEvent
 
                     // 顧客登録を登録できなかったらエラー
                     if (is_array($createResult) && isset($createResult['error'])) {
-                        $this->setErrorOnRequest($request, PayJpClient::getErrorMessageFromCode($createResult['error']));
+                        $this->setErrorOnRequest($request, PayJpClient::getErrorMessageFromCode($createResult['error'], $this->locale));
                         return;
                     }
 
@@ -250,7 +250,7 @@ class PayJpEvent
 
                 // 支払いを作成できなかったらエラー
                 if (is_array($chargeResult) && isset($chargeResult['error'])) {
-                    $this->setErrorOnRequest($request, PayJpClient::getErrorMessageFromCode($chargeResult['error']));
+                    $this->setErrorOnRequest($request, PayJpClient::getErrorMessageFromCode($chargeResult['error'], $this->locale));
                     return;
                 }
 
@@ -277,7 +277,7 @@ class PayJpEvent
 
                     // トークンを作成できなかったらエラー
                     if (is_array($createResult) && isset($createResult['error'])) {
-                        $this->setErrorOnRequest($request, PayJpClient::getErrorMessageFromCode($createResult['error']));
+                        $this->setErrorOnRequest($request, PayJpClient::getErrorMessageFromCode($createResult['error'], $this->locale));
                         return;
                     }
 
@@ -291,7 +291,7 @@ class PayJpEvent
 
                 // 支払いを作成できなかったらエラー
                 if (is_array($chargeResult) && isset($chargeResult['error'])) {
-                    $this->setErrorOnRequest($request, PayJpClient::getErrorMessageFromCode($chargeResult['error']));
+                    $this->setErrorOnRequest($request, PayJpClient::getErrorMessageFromCode($chargeResult['error'], $this->locale));
                     return;
                 }
 
