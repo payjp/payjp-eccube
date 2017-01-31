@@ -22,23 +22,10 @@
 
 ## インストール方法
 
-- PAY.JP の公式ライブラリをインストールします。
-
-- `EC-CUBE/composer.json`を編集して以下の行を追加してください。
+- PAY.JP の公式ライブラリをインストールします。EC-CUBEフォルダで `composer require` を実行してください。
 
 ```
-    "require": {
-        "php": ">=5.3.3",
-        （略）
-        "payjp/payjp-php": "0.0.x"
-    },
-
-```
-
-- EC-CUBEフォルダで `composer install` を実行します。
-
-```
-php composer.phar install
+php composer.phar require payjp/payjp-php
 ```
 
 - このリポジトリをダウンロードして、構成ファイルを EC-CUBE の `app/Plugin/PayJp` に配置してください。
@@ -64,35 +51,3 @@ php app/console plugin:develop install --code PayJp
 - 商品を購入する際に、支払方法に「クレジットカード」を選択すると、カード情報を入力するフォームが表示されます。
 
 - テスト環境では[テストカード](https://pay.jp/docs/testcard)を利用して試すことが可能です。
-
-## テスト
-
-- [PHPUnit](https://phpunit.de/)と[Selenium](http://www.seleniumhq.org/)によるブラックボックステストを備えています。
-- Linuxのサーバ上ではXvfbを使って画面なしで実行できます。
-- 実行手順は下記の通りです。
-
-- `EC-CUBE/composer.json`を編集して以下の2行を追加または変更してください。
-
-```
-    "require-dev": {
-        （略）
-        "phpunit/phpunit": "4.6.*",
-        "phpunit/phpunit-selenium": ">=2.0,<2.1",
-        （略）
-    },
-
-```
-
-- EC-CUBEフォルダで `composer install` を実行します。
-
-```
-php composer.phar install
-```
-
-- テストを実行できます。
-
-```
-cd app/Plugin/PayJp
-./test_headless.sh
-```
-
