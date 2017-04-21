@@ -1,0 +1,27 @@
+version: "2"
+
+services:
+  postgres:
+    environment:
+      POSTGRES_USER: eccube
+      POSTGRES_PASSWORD: eccube
+    image: postgres:9.2
+
+  eccube:
+    image: payjp/payjp-eccube
+    build:
+      context: .
+      args:
+        eccube_version: 3.0.14
+    environment:
+      DBSERVER: postgres
+      DBNAME: eccube
+      DBUSER: eccube
+      DBPASS: eccube
+    entrypoint:
+      - /usr/src/ec-cube/entrypoint.sh
+      - apache2-foreground
+    links:
+      - postgres:5432
+    ports:
+      - 80:80

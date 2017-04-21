@@ -51,3 +51,17 @@ php app/console plugin:develop install --code PayJp
 - 商品を購入する際に、支払方法に「クレジットカード」を選択すると、カード情報を入力するフォームが表示されます。
 
 - テスト環境では[テストカード](https://pay.jp/docs/testcard)を利用して試すことが可能です。
+
+## Docker
+
+`docker-compose` を用いて、簡単に試験用の環境を構築することができます。
+
+```
+docker-compose up
+```
+
+にて、 `payjp/payjp-eccube` コンテナを立ち上げたあと、ブラウザから `http://127.0.0.1/admin` にアクセスしてください。
+
+管理者の初期ユーザー名 / パスワードは `admin` / `password` となっています。
+
+*注意:* 当 Docker イメージをそのまま本番環境で利用することは推奨されません。あくまで参考としてお使いください。

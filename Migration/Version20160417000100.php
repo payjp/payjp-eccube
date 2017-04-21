@@ -7,30 +7,60 @@ use Doctrine\DBAL\Schema\Schema;
 
 class Version20160417000100 extends AbstractMigration
 {
+    protected $entities = array(
+        'Plugin\PayJp\Entity\PayJpConfig',
+        'Plugin\PayJp\Entity\PayJpCustomer',
+        'Plugin\PayJp\Entity\PayJpLog',
+        'Plugin\PayJp\Entity\PayJpOrder',
+        'Plugin\PayJp\Entity\PayJpToken',
+    );
+
     public function up(Schema $schema)
     {
+        $schema = $this->getSchema();
         $this->dropTables($schema);
+        if ($this->connection->getDatabasePlatform()->getName() == "postgresql") {
+            $this->dropSequences($schema);
+        }
         $this->createTables($schema);
     }
 
     public function down(Schema $schema)
     {
         $this->dropTables($schema);
+        if ($this->connection->getDatabasePlatform()->getName() == "postgresql") {
+            $this->dropSequences($schema);
+        }
     }
 
     private function dropTables(Schema $schema) {
         $tableNames = $schema->getTableNames();
         $dropTableNames = array(
-            $schema->getName() . '.plg_pay_jp_customer',
-            $schema->getName() . '.plg_pay_jp_token',
-            $schema->getName() . '.plg_pay_jp_config',
-            $schema->getName() . '.plg_pay_jp_log',
-            $schema->getName() . '.plg_pay_jp_order',
+            'plg_pay_jp_customer',
+            'plg_pay_jp_token',
+            'plg_pay_jp_config',
+            'plg_pay_jp_log',
+            'plg_pay_jp_order',
         );
 
         foreach ($dropTableNames as $drop) {
-            if (array_search($drop, $tableNames)) {
+            if ($schema->hasTable($drop)) {
                 $schema->dropTable($drop);
+            }
+        }
+    }
+
+    private function dropSequences(Schema $schema) {
+        $targetSequences = array(
+            'plg_pay_jp_customer_id_seq',
+            'plg_pay_jp_token_id_seq',
+            'plg_pay_jp_config_id_seq',
+            'plg_pay_jp_log_id_seq',
+            'plg_pay_jp_order_id_seq',
+        );
+        foreach ($targetSequences as $seq) {
+            if ($schema->hasSequence($seq)) {
+                $schema->dropSequence($seq);
             }
         }
     }
@@ -70,5 +100,13 @@ class Version20160417000100 extends AbstractMigration
         $table->addColumn('created_at', 'datetime');
         $table->setPrimaryKey(array('id'));
         $table->addUniqueIndex(array('order_id'));
+    }
+
+    function getSchema() {
+        $app = \Eccube\Application::getInstance();
+        $em = $app['orm.em'];
+        $metas = array_map(array($em->getMetadataFactory(), 'getMetadataFor'), $this->entities);
+        $tool = new \Doctrine\ORM\Tools\SchemaTool($em);
+        return $tool->getSchemaFromMetadata($metas);
     }
 }
