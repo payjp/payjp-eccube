@@ -56,8 +56,17 @@ php app/console plugin:develop install --code PayJp
 
 `docker-compose` を用いて、簡単に試験用の環境を構築することができます。
 
+`.env` ファイルに
+
 ```
-docker-compose up
+DBTYPE=mysql
+```
+
+と書き、
+
+
+```
+docker-compose up eccube
 ```
 
 にて、 `payjp/payjp-eccube` コンテナを立ち上げたあと、ブラウザから `http://127.0.0.1/admin` にアクセスしてください。

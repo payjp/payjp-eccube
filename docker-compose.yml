@@ -1,11 +1,21 @@
 version: "2"
 
 services:
-  postgres:
+  pgsql:
     environment:
-      POSTGRES_USER: eccube
+      POSTGRES_USER: root
       POSTGRES_PASSWORD: eccube
-    image: postgres:9.2
+    volumes:
+      - ./docker/postgres-initdb.d:/docker-entrypoint-initdb.d
+    image: postgres:9.6
+
+  mysql:
+    environment:
+      MYSQL_DATABASE: eccube
+      MYSQL_USER: eccube
+      MYSQL_PASSWORD: eccube
+      MYSQL_ROOT_PASSWORD: eccube
+    image: mysql:5.7
 
   eccube:
     image: payjp/payjp-eccube
@@ -14,7 +24,10 @@ services:
       args:
         eccube_version: 3.0.14
     environment:
-      DBSERVER: postgres
+      DBTYPE: ${DBTYPE}
+      DBSERVER: ${DBTYPE}
+      ROOTUSER: root
+      ROOTPASS: eccube
       DBNAME: eccube
       DBUSER: eccube
       DBPASS: eccube
@@ -22,6 +35,6 @@ services:
       - /usr/src/ec-cube/entrypoint.sh
       - apache2-foreground
     links:
-      - postgres:5432
+      - ${DBTYPE}:3306
     ports:
       - 80:80
