@@ -1,5 +1,7 @@
 #!/bin/sh
 
+PLUGINDIR=/usr/src/ec-cube-plugins
+export PLUGINDIR
 WORKDIR=/usr/src/ec-cube
 export WORKDIR
 
@@ -28,14 +30,16 @@ if ($s === false) {
 }
 fclose($s);
 
-$workdir = $_ENV["WORKDIR"];
-$entry = posix_getpwnam("www-data");
-$env = array_merge($_ENV, ["HOME" => $workdir]);
-posix_setgid($entry["gid"]);
-posix_setuid($entry["uid"]);
+$workdir = $_ENV['WORKDIR'];
+$plugindir = $_ENV['PLUGINDIR'];
+$entry = posix_getpwnam('www-data');
+$env = array_merge($_ENV, ['HOME' => $workdir]);
+
 function run($args) {
-    global $env;
+    global $env, $entry;
     if (!pcntl_fork()) {
+        posix_setgid($entry['gid']);
+        posix_setuid($entry['uid']);
         pcntl_exec(PHP_BINARY, $args, $env);
         exit(255);
     }
@@ -46,9 +50,48 @@ function run($args) {
     }
 }
 
-run([$workdir . "/eccube_install.php", $dbtype, "none"]);
-run(["app/console", "plugin:develop", "install", "--code", "PayJp"]);
-run(["app/console", "plugin:develop", "enable", "--code", "PayJp"]);
+function recursive_copy($src, $dest) {
+    global $entry;
+    mkdir($dest);
+    chown($dest, $entry['uid']);
+    chgrp($dest, $entry['gid']);
+    foreach (new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator(
+                $src, FilesystemIterator::KEY_AS_PATHNAME
+                      | FilesystemIterator::CURRENT_AS_SELF),
+            RecursiveIteratorIterator::SELF_FIRST) as $info) {
+        $path = $info->getSubPathname();
+        if ($info->isDot()) {
+            continue;
+        }
+        $dest_path = $dest . '/' . $path;
+        if ($info->isDir()) {
+            mkdir($dest_path);
+        } else {
+            copy($info->getPathname(), $dest_path);
+        }
+        chown($dest_path, $entry['uid']);
+        chgrp($dest_path, $entry['gid']);
+    }
+}
+
+function install_plugins() {
+    global $stderr, $workdir, $plugindir;
+    foreach (new DirectoryIterator($plugindir) as $info) {
+        if ($info->isDot() || !$info->isDir()) {
+            continue;
+        }
+        $plugin = $info->getFilename();
+        fwrite($stderr, "Installing plugin {$plugin}...\n");
+        fflush($stderr);
+        recursive_copy($info->getPathname(), $workdir . '/app/Plugin/' . $plugin);
+        run(['app/console', 'plugin:develop', 'install', '--code', $plugin]);
+        run(['app/console', 'plugin:develop', 'enable', '--code', $plugin]);
+    }
+}
+
+run([$workdir . '/eccube_install.php', $dbtype, 'none']);
+install_plugins();
 HERE
 fi
 
