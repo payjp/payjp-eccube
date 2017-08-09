@@ -17,7 +17,6 @@ class Version20160417000100 extends AbstractMigration
 
     public function up(Schema $schema)
     {
-        $schema = $this->getSchema();
         $this->dropTables($schema);
         if ($this->connection->getDatabasePlatform()->getName() == "postgresql") {
             $this->dropSequences($schema);
@@ -100,13 +99,5 @@ class Version20160417000100 extends AbstractMigration
         $table->addColumn('created_at', 'datetime');
         $table->setPrimaryKey(array('id'));
         $table->addUniqueIndex(array('order_id'));
-    }
-
-    function getSchema() {
-        $app = \Eccube\Application::getInstance();
-        $em = $app['orm.em'];
-        $metas = array_map(array($em->getMetadataFactory(), 'getMetadataFor'), $this->entities);
-        $tool = new \Doctrine\ORM\Tools\SchemaTool($em);
-        return $tool->getSchemaFromMetadata($metas);
     }
 }
