@@ -24,7 +24,7 @@ while (--$timeout > 0) {
     sleep(1);
 }
 if ($s === false) {
-    fwrite($stderr, "timeout while waiting for database serve to start up.\n");
+    fwrite($stderr, "timeout while waiting for database server to start up.\n");
     fflush($stderr);
     exit(1);
 }
