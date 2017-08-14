@@ -45,13 +45,13 @@ class Version20160417000100 extends AbstractMigration
 
         $table = $schema->createTable("plg_pay_jp_token");
         $table->addColumn('id', 'string', array('length' => 16, 'notnull' => true));
-        $table->addColumn('pay_jp_token', 'string', array('length' => 40, 'notnull' => true));
+        $table->addColumn('pay_jp_token', 'string', array('notnull' => true));
         $table->addColumn('created_at', 'datetime');
         $table->setPrimaryKey(array('id'));
 
         $table = $schema->createTable("plg_pay_jp_config");
         $table->addColumn('id', 'integer', array('notnull' => true));
-        $table->addColumn('api_key_secret', 'string', array('length' => 40, 'notnull' => true));
+        $table->addColumn('api_key_secret', 'string', array('notnull' => true));
         $table->addColumn('created_at', 'datetime');
         $table->setPrimaryKey(array('id'));
 
