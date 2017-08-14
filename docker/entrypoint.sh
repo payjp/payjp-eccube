@@ -9,7 +9,7 @@ if [ ! -e "${WORKDIR}/app/config/eccube/config.yml" ]; then
     php <<'HERE' || exit 
 <?php
 $stderr = fopen('php://stderr', 'w');
-$timeout = 30;
+$timeout = 60;
 $s = false;
 $dbtype = $_ENV['DBTYPE'];
 $host = $_ENV['DBSERVER'] ?: 'localhost';
