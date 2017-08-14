@@ -28,33 +28,35 @@ class PluginManager extends AbstractPluginManager
     public function enable($config, $app)
     {
         // クレジットカードという決済手段がなければ登録する
-        $OldPayment = $app['eccube.repository.payment']
+        $payment = $app['eccube.repository.payment']
             ->findOneBy(
                 array('method' => 'クレジットカード')
             );
-        if (is_null($OldPayment)) {
-            $Payment = $app['eccube.repository.payment']->findOrCreate(0);
-            $Payment->setMethod('クレジットカード');
-            $Payment->setCharge(0);
-            $app['orm.em']->persist($Payment);
-            $app['orm.em']->flush($Payment);
+
+        if (is_null($payment)) {
+            $softDeleteFilter = $app['orm.em']->getFilters()->getFilter('soft_delete');
+            $softDeleteFilter->setExcludes(array('Eccube\Entity\Member'));
+            $defaultCreator = $app['eccube.repository.member']->findOneBy(array('id' => 1));
+            $payment = $app['eccube.repository.payment']->findOrCreate(0);
+            $payment->setMethod('クレジットカード');
+            $payment->setCharge(0);
+            $payment->setRuleMin(0);
+            $payment->setCreator($defaultCreator);
+            $app['orm.em']->persist($payment);
+            $app['orm.em']->flush($payment);
         }
 
         // 全ての配送手段に対して有効にする
-        $GeneratedPayment = $app['eccube.repository.payment']
-            ->findOneBy(
-                array('method' => 'クレジットカード')
-            );
-        $Deliveries = $app['eccube.repository.delivery']->findAll();
-        foreach ($Deliveries as $d) {
-            $OldPaymentOption = $app['eccube.repository.payment_option']->findOneBy(array('Payment' => $GeneratedPayment, 'Delivery' => $d));
-            if (is_null($OldPaymentOption)) {
-                $PaymentOption = new PaymentOption();
-                $PaymentOption->setDelivery($d);
-                $PaymentOption->setPayment($GeneratedPayment);
-                $PaymentOption->setDeliveryId($d->getId());
-                $PaymentOption->setPaymentId($GeneratedPayment->getId());
-                $app['orm.em']->persist($PaymentOption);
+        $deliveries = $app['eccube.repository.delivery']->findAll();
+        foreach ($deliveries as $delivery) {
+            $paymentOption = $app['eccube.repository.payment_option']->findOneBy(array('Payment' => $payment, 'Delivery' => $delivery));
+            if (is_null($paymentOption)) {
+                $paymentOption = new PaymentOption();
+                $paymentOption->setDelivery($delivery);
+                $paymentOption->setPayment($payment);
+                $paymentOption->setDeliveryId($delivery->getId());
+                $paymentOption->setPaymentId($payment->getId());
+                $app['orm.em']->persist($paymentOption);
             }
         }
 
