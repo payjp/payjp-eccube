@@ -1,3 +1,7 @@
+**[EC-CUBE プラグインのサポート予定について - PAY.JP Announcement](http://payjp-announce.hatenablog.com/entry/2017/10/10/182123)**
+
+---
+
 # payjp-eccube
 
 [EC-CUBE](http://www.ec-cube.net)用の[PAY.JP](https://pay.jp/)の決済プラグインです。
